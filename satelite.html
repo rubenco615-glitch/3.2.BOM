@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana satélite</title>
+</head>
+
+<body>
+    <h2>Ventana satélite</h2>
+    <p id="bienvenida"></p>
+
+    <button onclick="redirigirConHistorial()">Redirigir con Historial</button>
+    <button onclick="redirigirSinHistorial()">Redirigir sin Historial</button>
+    <button onclick="autodestruir()">Autodestrucción en 5 segundos</button>
+
+    <p id="mensaje"></p>
+
+    <script>
+        let navegador = navigator.userAgent;
+        let sistema = "desconocido";
+
+        if (navegador.includes("Windows")) {
+            sistema = "Windows";
+        } else if (navegador.includes("Mac")) {
+            sistema = "Mac";
+        } else if (navegador.includes("Linux")) {
+            sistema = "Linux";
+        }
+
+        document.getElementById("bienvenida").textContent =
+            "¡Hola! Estás navegando desde " + sistema + ".";
+
+        // Cambia la página principal y guarda la entrada en el historial
+        function redirigirConHistorial() {
+            if (window.opener && !window.opener.closed) {
+                window.opener.location.assign("https://www.ilerna.es/");
+            } else {
+                alert("No se encuentra la ventana principal.");
+            }
+        }
+
+        // Cambia la página principal sustituyendo la entrada en el historial
+        function redirigirSinHistorial() {
+            if (window.opener && !window.opener.closed) {
+                window.opener.location.replace("https://www.ilerna.es/");
+            } else {
+                alert("No se encuentra la ventana principal.");
+            }
+        }
+
+        let iniciado = false;
+
+        function autodestruir() {
+            if (iniciado) return; // Evita varias cuentas atrás
+            iniciado = true;
+
+            let segundos = 5;
+            let mensaje = document.getElementById("mensaje");
+            mensaje.textContent = "La ventana se cerrará en " + segundos + " segundos.";
+
+            // Actualiza el texto cada segundo
+            let contador = setInterval(function () {
+                segundos--;
+                mensaje.textContent = "La ventana se cerrará en " + segundos + " segundos.";
+                if (segundos === 0) {
+                    clearInterval(contador);
+                }
+            }, 1000);
+
+            // Cierra la ventana después de cinco segundos
+            setTimeout(function () {
+                window.close();
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>

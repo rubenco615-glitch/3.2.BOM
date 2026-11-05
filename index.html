@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventana principal</title>
+</head>
+
+<body>
+    <h1>Ventana principal</h1>
+    <p>Pulsa el botón para abrir una ventana satélite.</p>
+    <button onclick="abrirSatelite()">Lanzar Ventana Satélite</button>
+
+    <script>
+        function abrirSatelite() {
+            // Tamaño de la ventana nueva
+            let ancho = 400;
+            let alto = 300;
+
+            // Calcula el centro del espacio disponible en la pantalla
+            let izquierda = Math.floor((screen.availWidth - ancho) / 2);
+            let arriba = Math.floor((screen.availHeight - alto) / 2);
+
+            //Abre el archivo satelite.html
+            let ventana = window.open(
+                "satelite.html",
+                "ventanaSatelite",
+                "width=" + ancho + ",height=" + alto +
+                ",left=" + izquierda + ",top=" + arriba
+            );
+
+            // Por si bloquean las ventanas emergentes
+            if (ventana === null) {
+                alert("Permite las ventanas emergentes para probar la práctica.");
+            }
+        }
+    </script>
+</body>
+
+</html>
